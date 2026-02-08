@@ -45,11 +45,9 @@
             transition: background-color 0s, color 0s;
             overflow-x: hidden;
             position: relative;
-            /* Enable GPU acceleration globally */
             transform: translateZ(0); 
         }
 
-        /* Optimized Cursor - Removed mix-blend-mode */
         #cursor {
             position: fixed; top: 0; left: 0; width: var(--cursor-size); height: var(--cursor-size);
             border: 2px solid var(--text-main); border-radius: 50%;
@@ -63,15 +61,6 @@
             background: rgba(0, 243, 255, 0.1);
         }
         #cursor.hovered { width: 50px; height: 50px; background: rgba(0, 243, 255, 0.2); border-color: var(--accent-secondary); }
-
-        #mode-shutter {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #000; z-index: 10000; transform: translateY(0);
-            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Orbitron'; font-size: 2rem; color: var(--accent);
-        }
-        #mode-shutter:not(.active) { transform: translateY(100%); }
 
         #canvas-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
@@ -97,7 +86,6 @@
         .coord-display { bottom: 30px; left: 80px; }
         .sys-status { top: 90px; right: 80px; text-align: right; }
 
-        /* Heartbeat replaced with CSS Animation */
         #heartbeat-wrapper {
             position: fixed; bottom: 20px; left: 80px; width: 150px; height: 50px;
             display: flex; align-items: center; justify-content: space-between;
@@ -129,7 +117,6 @@
             width: 4px; background: var(--accent); height: 5px; transition: height 0.2s;
         }
 
-        /* Removed backdrop-filter to fix lag */
         nav {
             position: fixed; top: 0; width: 100%; padding: 20px 50px;
             display: flex; justify-content: space-between; align-items: center;
@@ -247,7 +234,7 @@
             transition: all 0.4s; position: relative; overflow: hidden;
         }
         body.advanced-mode .timeline-content {
-            background: rgba(0,0,0,0.8); /* Removed blur */
+            background: rgba(0,0,0,0.8); 
             border: 1px solid var(--border-color);
             clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
         }
@@ -268,7 +255,7 @@
             position: relative; z-index: 1; will-change: transform;
         }
         body.advanced-mode .card-item {
-            background: rgba(255,255,255,0.05); /* Removed blur */
+            background: rgba(255,255,255,0.05); 
             border: 1px solid rgba(0, 243, 255, 0.2);
             box-shadow: 0 0 0 rgba(0,0,0,0);
             clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
@@ -314,8 +301,6 @@
 
     <div id="cursor"></div>
 
-    <div id="mode-shutter">SYSTEM REBOOTING...</div>
-
     <div class="hud-corner top-left"></div>
     <div class="hud-corner top-right"></div>
     <div class="hud-corner bottom-left"></div>
@@ -323,7 +308,6 @@
     <div class="hud-text coord-display">LAT: 33.5905 N<br>LNG: 71.2225 E</div>
     <div class="hud-text sys-status">SYS: SECURE<br>NET: ENCRYPTED</div>
     
-    <!-- CSS Heartbeat Replaces JS Canvas -->
     <div id="heartbeat-wrapper">
         <div class="hb-bar"></div><div class="hb-bar"></div><div class="hb-bar"></div><div class="hb-bar"></div><div class="hb-bar"></div>
     </div>
@@ -438,33 +422,17 @@
 
         const toggleBtn = document.getElementById('mode-toggle');
         const body = document.body;
-        const shutter = document.getElementById('mode-shutter');
         let isAdvanced = false;
 
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                shutter.classList.remove('active');
-            }, 800);
-        });
-
         toggleBtn.addEventListener('click', () => {
-            shutter.classList.add('active');
-            toggleBtn.innerText = "Loading...";
-
-            setTimeout(() => {
-                isAdvanced = !isAdvanced;
-                body.classList.toggle('advanced-mode');
-                
-                if(isAdvanced) {
-                    toggleBtn.innerText = "Revert to Safe";
-                } else {
-                    toggleBtn.innerText = "Initiate Override";
-                }
-
-                setTimeout(() => {
-                    shutter.classList.remove('active');
-                }, 100);
-            }, 600);
+            isAdvanced = !isAdvanced;
+            body.classList.toggle('advanced-mode');
+            
+            if(isAdvanced) {
+                toggleBtn.innerText = "Revert to Safe";
+            } else {
+                toggleBtn.innerText = "Initiate Override";
+            }
         });
 
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
@@ -533,7 +501,6 @@
             }
         }, 100);
 
-        /* OPTIMIZED CANVAS */
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let animationId;
@@ -573,7 +540,6 @@
                 ctx.fill();
             }
         }
-        // Reduced particles from 50 to 30 to save CPU
         for(let i=0; i<30; i++) particles.push(new Particle());
 
         function drawGrid() {
@@ -611,7 +577,7 @@
             drawGrid();
 
             if(isAdvanced) {
-                // Optimized Matrix Drawing (Only draw every 5th column occasionally or simplify)
+                ctx.fillStyle = '#0F0';
                 ctx.font = fontSize + 'px monospace';
                 for(let i = 0; i < drops.length; i++) {
                     const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
@@ -628,11 +594,10 @@
                     const dx = particles[j].x - p.x;
                     const dy = particles[j].y - p.y;
                     const distance = Math.sqrt(dx*dx + dy*dy);
-                    // Reduced distance check frequency
                     if(distance < 120) { 
                         ctx.beginPath();
                         ctx.strokeStyle = isAdvanced ? `rgba(0, 243, 255, ${0.1 - distance/1200})` : `rgba(0,0,0,${0.1 - distance/1200})`;
-                        ctx.lineWidth = 1;
+                        ctx.lineWidth =1;
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
