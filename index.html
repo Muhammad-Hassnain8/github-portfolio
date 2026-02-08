@@ -34,13 +34,11 @@
             --radius: 0;
         }
 
-        /* REMOVED cursor: none from body and * */
         body {
             margin: 0; padding: 0;
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-main);
-            /* No cursor: none here */
             overflow-x: hidden;
             position: relative;
             transform: translateZ(0); 
@@ -48,8 +46,6 @@
 
         * { box-sizing: border-box; scroll-behavior: smooth; }
 
-        /* REMOVED #cursor styles entirely */
-        
         /* --- FLASH TRANSITION --- */
         #flash-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -421,14 +417,115 @@
     </footer>
 
     <script>
-        /* --- MODE SWITCH WITH FLASH --- */
+        /* --- AUDIO ENGINE (Web Audio API) --- */
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+                this.masterGain = null;
+            }
+
+            init() {
+                // Audio Context must be created after user interaction
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                    this.masterGain = this.ctx.createGain();
+                    this.masterGain.gain.value = 0.1; // Keep volume low
+                    this.masterGain.connect(this.ctx.destination);
+                }
+            }
+
+            // Generic Synth Player
+            playTone(freq, type, duration, vol = 0.1) {
+                if (!this.ctx || this.ctx.state === 'suspended') return;
+                
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                
+                gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(this.ctx.currentTime);
+                osc.stop(this.ctx.currentTime + duration);
+            }
+
+            playHover() {
+                // Sine wave "Bloop"
+                this.playTone(400, 'sine', 0.1, 0.05);
+            }
+
+            playClick() {
+                // Square wave "Tick"
+                this.playTone(800, 'square', 0.05, 0.08);
+            }
+
+            playReboot() {
+                // Sawtooth sweep "Power Up"
+                if(!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                
+                // Frequency Sweep: 100Hz -> 600Hz
+                osc.frequency.setValueAtTime(100, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(600, this.ctx.currentTime + 0.5);
+                
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(this.ctx.currentTime);
+                osc.stop(this.ctx.currentTime + 0.5);
+            }
+
+            playShutdown() {
+                // Sawtooth sweep down "Power Down"
+                if(!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                
+                // Frequency Sweep: 600Hz -> 100Hz
+                osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+                osc.frequency.linearRampToValueAtTime(100, this.ctx.currentTime + 0.4);
+                
+                gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.4);
+                
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                
+                osc.start(this.ctx.currentTime);
+                osc.stop(this.ctx.currentTime + 0.4);
+            }
+
+            playGlitch() {
+                // Short burst of square wave
+                this.playTone(2000, 'square', 0.03, 0.02);
+            }
+        }
+
+        const sfx = new SoundFX();
+        let isAdvanced = false;
+
+        /* --- MODE SWITCH WITH FLASH & SOUND --- */
         const toggleBtn = document.getElementById('mode-toggle');
         const body = document.body;
         const flashOverlay = document.getElementById('flash-overlay');
-        let isAdvanced = false;
 
         toggleBtn.addEventListener('click', () => {
-            // Flash Effect
+            // Initialize Audio Context on first interaction
+            sfx.init();
+            
+            // Visual Flash
             flashOverlay.classList.add('flash-active');
             setTimeout(() => flashOverlay.classList.remove('flash-active'), 300);
 
@@ -437,8 +534,10 @@
             
             if(isAdvanced) {
                 toggleBtn.innerText = "Revert to Safe";
+                sfx.playReboot(); // Sound: Power Up
             } else {
                 toggleBtn.innerText = "Initiate Override";
+                sfx.playShutdown(); // Sound: Power Down
             }
         });
 
@@ -447,16 +546,15 @@
 
         tiltCards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
+                if(isAdvanced) sfx.playHover(); // Sound: Hover Blip
+                
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg rotation
+                const rotateX = ((y - centerY) / centerY) * -10;
                 const rotateY = ((x - centerX) / centerX) * 10;
-
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
             });
 
@@ -472,6 +570,8 @@
             let iteration = 0;
             
             target.onmouseover = (event) => {  
+                sfx.playGlitch(); // Sound: Glitch burst
+                
                 let originalText = event.target.dataset.value;
                 iteration = 0;
                 if (animationFrameId) cancelAnimationFrame(animationFrameId);
@@ -502,10 +602,11 @@
         /* --- MAGNETIC BUTTONS --- */
         document.querySelectorAll('.magnetic-wrap').forEach(wrapper => {
             wrapper.addEventListener('mousemove', (e) => {
+                if(isAdvanced) sfx.playHover(); // Sound: Hover Blip
+                
                 const rect = wrapper.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                // Move button slightly towards cursor
                 wrapper.querySelector('.btn-main').style.transform = `translate(${x * 0.3}px, ${y * 0.5}px) scale(1.05)`;
             });
             wrapper.addEventListener('mouseleave', () => {
@@ -513,11 +614,20 @@
             });
         });
 
+        /* --- GLOBAL CLICK SOUND --- */
+        document.addEventListener('click', (e) => {
+            if(isAdvanced && (e.target.tagName === 'A' || e.target.tagName === 'BUTTON')) {
+                sfx.playClick(); // Sound: Click Tick
+            }
+        });
+
         /* --- SCROLL REVEAL (Staggered) --- */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if(entry.isIntersecting) {
                     entry.target.classList.add('revealed');
+                    // Optional: play subtle scroll sound?
+                    // kept silent for now to avoid annoyance
                 }
             });
         }, { threshold: 0.1 });
@@ -574,7 +684,6 @@
                 ctx.fill();
             }
         }
-        // Reduced particles from 50 to 30 to save CPU
         for(let i=0; i<30; i++) particles.push(new Particle());
 
         function drawGrid() {
