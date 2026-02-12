@@ -3,713 +3,689 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Hassnain | Ethical Hacker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Muhammad Hassnain | Cybersecurity Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <style>
-        /* --- PERMANENT ADVANCED THEME (Default) --- */
-        body {
-            --bg-color: #000000;
-            --terminal-green: #33ff00; /* Authentic Kali Green */
-            --term-bg: #000;
-            --text-color: #ffffff;
-            --term-border: #333;
-            --font-main: 'Share Tech Mono', monospace;
-            --font-display: 'Orbitron', sans-serif;
-            --shadow: 0 10px 30px -10px rgba(0, 255, 65, 0); 
-        }
-
+        /* --- THEME: PERMANENT CYBERPUNK --- */
         body {
             margin: 0; padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
+            background-color: #020202;
+            color: #00ff00; /* Terminal Green */
+            font-family: 'Share Tech Mono', monospace;
             overflow-x: hidden;
             position: relative;
-            /* Hide main content until boot finishes */
-            main { opacity: 0; pointer-events: none; opacity: 0; transition: opacity 1s; }
-        }
-        body.booted main { opacity: 1; pointer-events: auto; }
-
-        /* --- KALI LOGO (CSS Dragon) --- */
-        .kali-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
         }
 
-        .dragon-head {
-            width: 0; height: 0;
-            border-top: 15px solid var(--terminal-green);
-            border-radius: 50%; /* Dragon Curve */
-            border-left: 15px solid var(--terminal-green);
-            border-right: 15px solid var(--terminal-green);
-            display: flex;
-            justify-content: center;
-            width: 160px;
-            aspect-ratio: 1 / 0.4; /* Dragon Head is tall */
-            position: relative;
-            background: linear-gradient(to bottom, #111, #000);
-        }
-
-        .dragon-body {
-            width: 60px; height: 180px; /* Curved body */
-            border-radius: 10px;
-            background: linear-gradient(135deg, #000, #111);
-            position: relative;
-        }
-
-        .dragon-tail { position: absolute; bottom: -20px; left: 50%; width: 0; height: 0; border: 0;
-            border-left: 15px solid var(--terminal-green);
-            border-bottom: 15px solid var(--terminal-green);
-            border-top-right: 5px solid var(--term-border);
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 0px;
-            border-top-left-radius: 0px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .dragon-wing {
-            width: 30px; height: 80px;
-            background: #111;
-            border-bottom: 15px solid var(--term-border);
-            position: absolute;
-        }
+        /* --- REALISTIC CRT EFFECTS --- */
         
-        .dragon-wing.left { left: -18px; top: -10px; border-left: 15px solid var(--terminal-green); transform: rotate(-20deg); }
-        .dragon-wing.right { right: -18px; top: -10px; border-right: 15px solid var(--terminal-green); transform: rotate(20deg); }
-
-        /* --- BOOT SCREEN STYLING --- */
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--term-bg); z-index: 9999;
-            padding: 40px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .kali-logo { font-weight: 900; font-size: 1.2rem; color: #fff; margin-bottom: 10px; text-shadow: 0 0 10px var(--terminal-green); }
-
-        .boot-log {
-            font-size: 1.1rem; color: var(--text-color);
-            text-align: left;
-            width: 80%;
-            max-height: 60vh; /* Prevent overflow on small screens */
-            overflow-y: auto;
-            font-weight: bold;
-            line-height: 1.8;
-        }
-
-        .log-line { margin-bottom: 8px; color: var(--terminal-text); }
-
-        /* Boot Status Colors */
-        .text-green { color: var(--terminal-green); }
-        .text-white { color: var(--text-color); }
-        .text-red { color: #ff3333; color: #ffffff; text-shadow: 2px 0 2px rgba(255, 255, 255, 0.3);
-        }
-
-        /* --- MAIN CONTENT STYLING (Hidden initially) --- */
-        #main-content {
-            padding: 120px 20px 60px 20px;
-            min-height: 100vh;
-        }
-
-        /* --- CURSOR FX (Always Active since we are always in advanced mode now) --- */
-        #cursor-fx-container {
-            position: fixed; top: 0; left: 0; width: 0; height: 0;
-            z-index: 9998;
-            pointer-events: none; /* Let clicks pass to content */
-        }
-
-        .cursor-core {
-            position: fixed; width: 40px; height: 40px;
-            border: 1px solid #00ff00;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.05s;
-            mix-blend-mode: screen;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0);
-        }
-
-        .cursor-trail {
-            position: fixed; width: 8px; height: 8px; background: #00ff00;
-            border-radius: 50%; pointer-events: none;
-            z-index: 9997;
-            opacity: 0.5;
-        }
-
-        /* --- THEME OVERRIDES (Always Advanced) --- */
-        :root {
-            --accent: #00f3ff; /* Neon Cyan */
-            --accent-secondary: #ff0055; /* Magenta/Pink */
-            --surface-color: rgba(20, 20, 30, 0.9);
-            --hud-bg: rgba(0, 255, 65, 0.1);
-        }
-
-        body.booted {
-            --bg-color: #020505; /* Deep Cyberpunk Black */
-            --surface-color: rgba(20, 20, 30, 0.8);
-            --text-main: #e0e0e0;
-            --text-muted: #94a3b8;
-            --border-color: rgba(0, 255, 65, 0.3);
-            --font-main: 'Share Tech Mono', monospace;
-            --font-display: 'Orbitron', sans-serif;
-            --shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-        }
-
-        /* --- REALISTIC CRT SCANLINES (Always On) --- */
-        .scanlines {
+        /* 1. Screen Vignette (Screen Hood) */
+        .vignette {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 20, 40, 0), rgba(0, 20, 40, 0) 50%, rgba(0, 0, 0, 0.2));
-            background-size: 100% 4px;
-            pointer-events: none; z-index: 999;
-            opacity: 0.15;
-        }
-
-        /* --- REALISTIC CURSOR (Always "Hacker" Mode) --- */
-        .cursor-ring {
-            position: fixed; width: 50px; height: 50px;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%);
+            pointer-events: none; z-index: 900;
             pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease-out;
         }
 
-        /* --- BACKGROUND --- */
-        #canvas-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; /* Behind content */
-        opacity: 0.8; /* Slightly visible even in "booted" mode through content */
-            transition: opacity 1s;
-        }
-
-        /* --- HUD ELEMENTS (Advanced/Always Visible) --- */
-        .hud-corner {
-            position: fixed; width: 40px; height: 40px;
-            border: 1px solid var(--hud-bg);
-            pointer-events: none; z-index: 100;
-            opacity: 0; /* Hidden during initial boot */
-            transition: opacity 1s ease-in;
-        }
-        body.booted .hud-corner { opacity: 1; }
-
-        .top-left { top: 80px; left: 20px; border-right: none; border-bottom: none; border-top: 2px dashed var(--border-color); }
-        .top-right { top: 80px; right: 20px; border-left: none; border-bottom: none; border-top: 2px dashed var(--border-color); }
-        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; border-bottom: 2px dashed var(--border-color); }
-        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; border-bottom: none; border-top: 2px dashed var(--border-color); }
-
-        .hud-text {
-            font-family: 'Share Tech Mono';
-            position: fixed;
-            font-size: 0.8rem;
-            color: var(--accent);
-            opacity: 0; /* Hidden initially */
-            transition: opacity 1s ease-in;
-        }
-        body.booted .hud-text { opacity: 1; }
-
-        .coord-display { bottom: 30px; left: 70px; opacity: 0; }
-        .sys-status { top: 90px; right: 70px; text-align: right; opacity: 0; }
-        
-        /* Elements hidden during boot */
-        main, nav, footer, .cursor-fx-container, .hud-corner, .hud-text, .scanlines {
-            transition: opacity 0.5s ease-in-out;
-        }
-        body.booted main, body.booted nav { opacity: 1; }
-
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0, 5, 10, 0); /* Slight blue tint for Boot Screen UI */
-            border-bottom: 1px solid #1f293b; /* Standard border for Boot Screen */
-            z-index: 10000; /* Top of everything */
-        }
-
-        .logo { 
-            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.5rem; letter-spacing: 2px; color: #1e293b;
-        }
-        
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { text-decoration: none; color: #334; font-weight: 500; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
-
-        /* --- BOOT LOGIC (Boot Sequence) --- */
-        .mode-btn {
-            /* We change the button to "Reboot System" but functionality stays the same */
-            padding: 10px 25px; 
-            background: #000; border: 2px solid #33ff00; 
-            color: #33ff00;
-            font-family: var(--font-main);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .mode-btn:hover { background: #002200; box-shadow: 0 0 15px rgba(51, 255, 65, 0.5); }
-
-        /* --- MAIN CONTENT (Advanced Interface - Hidden during boot) --- */
-        /* Re-using previous Advanced CSS classes */
-        /* (Removed :root override above, putting values in 'Advanced' class below is no longer needed as we default to advanced now) */
-        body {
-            margin: 0; padding: 0;
-            /* Permanent Kali Theme */
-            --bg-color: #000000;
-            --surface-color: rgba(20, 20, 30, 0.8);
-            --text-main: #e0e0e0;
-            --text-muted: #94a3b8;
-            --accent: #00f3ff;
-            --accent-secondary: #ff0055;
-            --border-color: rgba(0, 243, 255, 0.3);
-            --font-main: 'Share Tech Mono', monospace;
-            --font-display: 'Orbitron', sans-serif;
-            --shadow: 0 0 20px 50px -10px rgba(0, 243, 255, 0.2);
-        }
-
-        /* --- REALISTIC CRT FX (Always On) --- */
-        /* Film Grain */
+        /* 2. Film Grain (Noise) */
         .film-grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3C/f%3E%3C/f%3E/f%3E/f%3E%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f3E/f%3E/f3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f3E/f3E/f%3E/f3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%E/f3E/f%3E/f3E/f3E/f%E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f3E/f3E/f%3E/f3E/f3E/f3E/f%3E/f%3E/f3E/f3E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%E/f%3E/f%3E/f3E/f%3E/f%3E/f%3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%3E/f%3E/f3E/f3E/f%3E/f%E/f3E/f%3E/f3E/f%3E/f%3E/f%3E/f3E/f3E/f3E/f%3E/f%3E/f%3E/f3E/f%E/f3E/f3E/f%3E/f%3E/f%3E/f%3E/f3E/f%3E/f3E/f%3E/f%3E/f%3E/f3E/f3E/f3E/f3E/f3E/f%3E/f%3E/f3E/f3E/f%3E/f3E/f3E/f3E/f%3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f%3E/f%E/f3E/f%3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f%3E/f%3E/f3E/f3E/f3E/f3E/f%E/f3E/f3E/f3E/f3E/f3E/f%3E/f3E/f%3E/f3E/f3E/f%3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f%3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f%3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f%3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/fE/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/fE/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/fE/f3E/f3E/fE/fE/f3E/f3E/fE/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/f3E/fE/f3E/f3E/f3E/f3E/fE/fE/f3E/fE/f3E/f3E/fE/f3E/f3E/f3E/fE/fE/f3E/fE/f3E/f3E/f3E/fE/fE/f3E/fE/f3E/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/f3E/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/f3E/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/f3E/f3E/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE/fE /font/main> &family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-        /* Permanently Set to Advanced Mode */
-        body {
-            /* Removed "Simple Mode" styling and reverted to default Kali Colors */
-            --bg-color: #000;
-            --surface-color: rgba(0,0,0,0);
-            --text-main: #e0e0e0;
-            --text-muted: #9f9f9f;
-            --accent: #00ff00; /* Pure Kali Green */
-            --accent-secondary: #ff0055;
-            --border-color: #333;
-            --font-main: 'Share Tech Mono', monospace;
-            --font-display: --font-main;
-            --shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            pointer-events: none; z-index: 899;
+            opacity: 0.07; /* Subtle noise */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3C/feColorMatrix%3E");
         }
 
-        /* --- BOOT SCREEN STYLES (Enhanced) */
+        /* 3. Screen Curvature (Barrel Distortion) */
+        .screen-curve {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+            pointer-events: none;
+            z-index: 900;
+        }
+
+        /* Scanlines (Flickering) */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0) 50%);
+            background-size: 100% 4px;
+            pointer-events: none; z-index: 900;
+            opacity: 0.2;
+            animation: scrollScan 8s linear infinite;
+        }
+
+        @keyframes scrollScan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 4px; }
+        }
+
+        /* --- MAIN STYLING (Advanced) --- */
+        :root {
+            --bg-color: #050505;
+            --surface-color: rgba(0, 20, 0, 0.7);
+            --text-main: #00ff00;
+            --text-muted: #008f11;
+            --accent: #00f3ff; /* Cyan Accent */
+            --accent-secondary: #ff0055;
+            --border-color: rgba(0, 255, 65, 0.3);
+            --font-display: 'Orbitron', sans-serif;
+        }
+
+        /* Elements hidden during boot */
+        main, .cursor-fx-container, .hud-corner, .hud-text, .heartbeat-wrapper, #audio-viz {
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.5s ease-in;
+        }
+        .visible { opacity: 1; pointer-events: auto; }
+
+        /* Text Shadow (Phosphor Glow) */
+        .phosphor-text {
+            text-shadow: 0 0 5px #00ff00, 0 0 10px rgba(0, 255, 0, 0.4);
+        animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            50% { opacity: 1; }
+            100% { opacity: 0.98; }
+        }
+
+        /* --- BOOT SCREEN (Realistic) --- */
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: #000; z-index: 9999;
+            padding: 40px;
             display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            opacity: 1; /* Visible by default */
-        }
-
-        /* --- DRAGON LOGO --- */
-        .kali-logo { font-weight: 900; color: #fff; margin-bottom: 10px; font-family: var(--font-main); }
-
-        .boot-log {
-            font-size: 1.2rem; color: var(--text-main); text-align: left;
-            width: 90%;
-            max-height: 80vh; /* Keep boot screen within screen */
-            overflow-y: auto;
+            align-items: flex-start;
             font-family: 'Share Tech Mono', monospace;
-            line-height: 1.5;
-        }
-
-        .log-line { margin-bottom: 5px; }
-
-        /* --- MAIN CONTENT (Hidden during boot) --- */
-        #main-content {
-            max-width: 1100px; margin: 0 auto; padding: 100px 20px;
-            opacity: 0; /* Starts Hidden */
-            transition: opacity 1s ease-in; 
-            pointer-events: none; /* Prevent clicks during boot */
-        }
-        .booted #main-content { opacity: 1; pointer-events: auto; }
-
-        /* --- HUD & FX (Always Active) --- */
-        #scanlines, #cursor-fx-container, .hud-corner, .hud-text, .cursor-ring, .cursor-trail, #heartbeat-wrapper, #audio-viz {
-            /* These are always visible, just hidden during boot (z-index management in JS) */
-        }
-
-        #scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999;
-            pointer-events: none;
-        }
-
-        .hud-corner {
-            position: fixed; width: 40px; height: 40px; z-index: 500;
-            border: 1px solid var(--accent);
-            pointer-events: none;
-        }
-        .top-left { top: 80px; left: 20px; border-right: none; border-bottom: none; }
-        .top-right { top: 80px; right: 20px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
-
-        .hud-text {
-            position: fixed; font-family: 'Share Tech Mono'; font-size: 0.8rem; color: var(--accent);
-            z-index: 500; pointer-events: none;
-        }
-        .coord-display { bottom: 30px; left: 70px; }
-        .sys-status { top: 90px; right: 70px; text-align: right; }
-
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 20px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0,0,0,0); /* Boot Screen colors */
-            border-bottom: 1px solid #222; /* Dark Gray border */
-            z-index: 1001; /* Top of Boot Screen */
-        }
-        
-        .logo { font-family: var(--font-display); font-weight: 900; font-size: 1.5rem; letter-spacing: -1px; color: #fff; }
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { text-decoration: none; color: #888; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-
-        /* --- MAIN STYLING (Always Advanced) --- */
-        main {
-            /* Overriding previous defaults to ensure Advanced Mode consistency */
-            --bg-color: #020505; /* Deep Black */
-            --surface-color: rgba(20, 20, 30, 0.8);
-            --text-main: #e0e0e0;
-            --text-muted: #94a3b8;
-            --accent: #00f3ff;
-            --accent-secondary: #ff0055;
-            --border-color: rgba(0, 243, 255, 0.3);
-            --font-main: 'Share Tech Mono', monospace;
-            --font-display: 'Orbitron', sans-serif;
-            --shadow: 0 20px 50px -10px rgba(0, 243, 255, 0.15);
-        }
-
-        /* --- CURSOR FX (Always Advanced) --- */
-        #cursor-fx-container {
-            position: fixed; top: 0; left: 0; width: 0; height: 0; z-index: 9998;
-        }
-
-        .cursor-core {
-            position: fixed; width: 40px; height: 40px;
-            border: 1px solid #00ff00;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height: 0.2s, border-color 0.2s;
-        }
-
-        .cursor-trail {
-            position: fixed; width: 8px; height: 8px; background: #00ff00;
-            border-radius: 50%;
-            pointer-events: none; z-index: 9997;
-        }
-
-        .cursor-ring {
-            position: fixed; width: 50px; height: 50px;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
-            pointer-events: none; z-index: 9999;
-            transition: all 0.1s ease-out;
-        }
-
-        /* --- REALISTIC CRT FX (Always On) --- */
-        /* Scanlines */
-        .scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 998;
-        }
-
-        /* --- HUD ELEMENTS (Always Visible) --- */
-        .hud-corner { pointer-events: none; opacity: 1; }
-
-        /* --- BACKGROUND --- */
-        #canvas-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        }
-
-        /* --- NAV --- */
-        nav {
-            position: fixed; top: 0; width: 100%; padding: 15px 30px;
-            display: pointer-events: auto; /* Allow nav clicks in advanced mode */
-            background: rgba(0, 0, 0, 0.9); /* Darker navbar */
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .logo { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-        
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { text-decoration: none; color: #888; font-weight: 500; font-size: 0.9rem; transition: 0.3s; position: relative; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-
-        /* --- BUTTON --- */
-        .mode-switch {
-            padding: 10px 20px;
-            background: transparent; border: 2px solid var(--accent);
-            color: var(--accent);
-            font-family: var(--font-main); font-weight: bold;
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase; letter-spacing: 1px;
-            z-index: 1001; /* Above other elements */
-        }
-
-        /* --- LAYOUT --- */
-        main { max-width: 1200px; margin: 0 auto; padding: 100px 20px 60px 20px; }
-
-        section { margin-bottom: 150px; opacity: 0; transform: 30px; transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        section.revealed { opacity: 1; transform: translateY(0); }
-
-        h2 {
-            font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 50px;
-            position: relative; display: inline-block; cursor: default;
-            color: #fff; text-transform: uppercase;
-            border-left: 5px solid var(--accent); padding-left: 20px;
-            text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
-        }
-
-        .hero { min-height: 80vh; display: flex; align-items: center; perspective: 1000px; }
-        .hero-text { max-width: 600px; text-align: left; }
-        .hero h1 { 
-            font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; color: #fff; 
-            text-shadow: 2px 0 var(--accent-secondary), -2px 0 var(--accent);
-            animation: textGlitch 4s infinite alternate-reverse;
-            white-space: nowrap;
-        }
-
-        .hero-tag {
-            display: background: transparent; border: 1px solid var(--accent); color: var(--accent);
-            font-family: 'Share Tech Mono'; text-transform: uppercase;
-            padding: 5px 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px var(--accent);
-        }
-        
-        /* Magnetic Buttons */
-        .magnetic-wrap { display: inline-block; position: relative; }
-        .btn-main {
-            padding: 15px 40px; font-size: 1.1rem; font-weight: bold; color: #fff;
-            background: transparent; border: 2px solid var(--accent); color: var(--accent);
-            cursor: pointer; position: relative; overflow: hidden; display: block; text-align: center;
-            text-decoration: none; 
-            text-transform: uppercase; letter-spacing: 2px;
-            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 100%, 0 100%, 0 30%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 0 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 0 100%, 100%, 0 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 0 100%, 100%, 100%, 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 0 100%, 0 100%, 0 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 100%, 0.1rem; margin-bottom: 20px; }
-
-        /* Advanced Mode Styles */
-        body {
-            /* Realistic Colors */
-            --bg-color: #050505;
-            --text-main: #e0e0e0; /* Off-White */
-            --text-muted: #94a3b8;
-            --accent: #00f3ff;
-            --accent-secondary: #ff0055;
-            --border-color: rgba(0, 100, 0.2, 0.2);
-            --font-main: 'Share Tech Mono', monospace;
-            --font-display: 'Orbitron', sans-serif;
-            --shadow: 0 20px 50px -10px rgba(0, 100, 255, 0.2);
-            --font-main: 'Inter', sans-serif;
-        }
-
-        /* Hide simple mode styles for the hidden "Simple Mode" classes */
-        .simple-mode { display: none; } /* Removed Simple Mode classes from CSS so we don't need 'body.simple-mode' check anymore */
-
-        /* --- OVERLAY --- */
-        #cursor-fx-container {
-            position: fixed; top: 0; left: 0; width: 0; height: 0; z-index: 9998;
-        }
-
-        .cursor-core {
-            position: fixed; width: 40px; height: 40px;
-            border: 1px solid var(--text-main); border-radius: 50%;
-            transform: transition: width: 0.2s, height 0.2s, border-color: 0.2s, border-color: 0.2s;
-            /* Always hidden until toggled in previous iteration. We assume the advanced toggle now acts as "Reboot" */
-
-        .cursor-trail { position: fixed; width: 8px; height: 8px; background: var(--text-main); border-radius: 50%; pointer-events: none; z-index: 0; opacity: 0; }
-        .cursor-ring {
-            position: position: fixed; width: 50px; height: 50px;
-            border: 1px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 0;
-            transition: all 0.1s ease-out; /* Slower friction */
-        }
-        
-        .cursor-reticle {
-            position: position: fixed; width: 20px; height: 20px;
-            border: 1px solid var(--accent-secondary); border-radius: 50%;
-            pointer-events: none; z-index: 0;
-            transition: all 0.1s ease-out;
-            transform: translate(-50%, -50%);
-        }
-        
-        /* --- SCROLL REVEAL (Optimized) ---
-        .reveal { opacity: 0; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.2, 0.2, 0.2, 1); }
-        .revealed { opacity: 1; transform: transform: translateY(0); }
-
-        /* --- ANIMATIONS --- */
-        @keyframes textGlitch {
-            0% { text-shadow: 0 0 var(--accent-secondary), -2px 0 var(--accent); }
-            20% { text-shadow: -2px 0 var(--accent-secondary), 2px 0 var(--accent); }
-            40% { text-shadow: 2px 0 var(--accent-secondary), -2px 0 var(--accent); }
-            60% { text-shadow: 2px 0 var(--accent-secondary), -2px 0 var(--accent); }
-            80% { text-shadow: -2px 0 var(--accent-secondary), -2px 0 var(--accent); }
-        }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } 100% { transform: translateY(0px); } }
-
-        /* --- AUDIO ENGINE (SFX & SOUND SYNTH) --- */
-        const audioCtx = null;
-        const sfx = new SoundFX();
-        
-        /* --- BOOT SEQUENCE LOGIC (Always Advanced Mode Startup Sequence) --- */
-        const bootMessages = [
-            "Initializing BIOS...",
-            "Checking memory... [    ]",
-            "Found CPU: Intel(R) Core i7 @ 2.50GHz",
-            "Memory: 8192 MB",
-            "Disk: /dev/sda",
-            "Filesystems...    ]",
-            "Checking Hardware...",
-            "[  OK  ] Network...",
-            "[  OK  ] Starting Network...",
-            "[  OK  ] Loading Linux Kernel...",
-            "[  OK  ] Mount /proc...",
-            "[  OK  ] Starting Network...",
-            "[  OK  ] Kali Linux...",
-            "Kali Linux 2023.4",
-            "[  OK  ] Starting Network...",
-            "[  OK  ] root@kali:~#",
-            "INIT: 0x123456789",
-            "[  OK  ] login: root",
-            "INIT: 0x123456789", 0x123456789",
-            "[  OK  ] root@kali:~#",
-            "INIT: 0x123456789",
-            "[  OK  ] root@kali:~#",
-            "[  OK  ] Mounting /proc...",
-            "[  OK  ] Mounted rootfs...",
-            "[  OK  ] Starting Network...",
-            "[  OK  ] root@kali:~#",
-            "[  OK  ] root@kali:~#",
-            "[ 100%3E /%3E/C/filter%3Cfilter id='noiseFilter'%3E%3C/f%3E/f%3E/f%3CfeTurbulence type='fractalNoise' baseFrequency='0.2' numOctaves='3' stitchTiles='stitch'/%3E/f%3E/f%3E/f%3E/f%3C/f%3E/f%3C/filter%3C/f%3C/f%3C/f%3C/f%3C/filter%3CfeColorMatrix type='saturate' values='0'/%3E/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f3C/f%3C/f3C/f%3C/f3C/f%3C/f3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f3C/f%3C/f3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f%3C/f3C/f3C/f%3C/f%3C/f%3C/f%3C/f%3C/f3C/f3C/f%3C/f%3C/f%3C/f%3C/f3C/f3C/f3C/f%3C/f%3C/f%3C/f%3C/f%3C/f3C/f3C/f%3C/f%3C/f%3C/f%3C/f3C/f%3C/f3C/f%3C/f%3C/f3C/f%3C/f%3C/f%3C/f%3C/f3C/f3C/f3C/f3C/f3C/f%3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C3C/f3C3C/f3C/f3C3C/f3C/f3C/f3C3C/f3C3C/f3C3C/f3C/f3C/f3C/f3C/F%3C/f%3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/fC/f3C/f3C/f3C/f3C3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/fC/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/fC/f3C/fC/f3C/fC/f3C/f3C/f3C/f3C/fC/f3C/f3C/fC/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/fC/f3C/f3C/fC/f3C/f3C/f3C/f3C/fC/f3C/fC/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/fC/f3C/f3C/f3C/fC/fC/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/fC/f3C/fC/fC/fC/fC/f3C/f3C/f3C/f3C/fC/f3C/f3C/f3C/f3C/fC/fC/f3C/fC/fC/fC/fC/fC/fC/fC/fC/fC/fC/f3C/f3C/f3C/fC/f3C/fC/f3C/fC/f3C/f3C/f3C/fC/fC/fC/fC/f3C/f3C/fC/fC/fC/fC/fC/fC/fC/fC/fC/fC/fC/fC/fC/fC/fc0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0 0f0 0 1000 0 0 0 0 0 0 0 0 1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1000; /* HPC black bg */
-            --bg-color: #0302505; 
-            --surface-color: rgba(0, 20, 30, 30, 0.8);
-            --text-main: #e0e0e0e0;
-            --text-muted: #94a3b8;
-            --accent: #00f3ff; /* Cyan for Advanced Mode */
-            --accent-secondary: #ff00555; /* Magenta/Pink */
-            --font-main: 'Inter', sans-serif;
-            --font-display: 'Inter', sans-serif;
-            --shadow: 0 20px 50px -10px rgba(0, 100, 255, 0.2); /* Modern Soft Shadow */
-            --radius: 12px;
-            --shadow: 0 20px 50px -10px rgba(0, 0, 0.2);
-        }
-
-        /* --- LAYOUT --- */
-        main { max-width: 100%; margin: 0 auto; padding: 0 0 auto; padding: 100px 20px 60px 60px 00 0; 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0 0 0; 0 0 0; 0 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0; 0; 0.0; 0; 0.0; 0.0; 0.0; 0.0; 0.0; 0; 0.0; 0; 0; 0.0; 0; 0; 0; 0; 0; 0 0; 0 0; 0; 0; 0; 0.0; 0 0; 0; 1000.0; 0; 0; 0.0.0.0; 0; 0; 0; 0 0.0; 0; 0.0; 0 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0 0; 0; 0.0; 0 0; 0; 0 0; 0; 0; 0 0; 0 0 0; 0; 0; 0 0; 0 0; 0; 0; 0; 0 0; 0; 0; 0; 0.0 0; 0.0; 0.0; 0; 0; 0; 0; 0 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 1000; 0 0 0.0; 0; 0; 1000; 1000 0 0 0.0; 1000 0.0; 0.0 0; 0; 1000; 0.0; 0.0.0; 0.0.0; 0.0 1000; 0.0; 0.0; 0 0; 0.0; 0 0; 0.0; 0.0; 0.0; 0.0; 0; 0; 0; 0.0; 0; 0.0; 0; 0 0; 1000 0; 0; 1000; 0.0 0.0.0.0; 0; 0.0; 0.0; 0.0; 0.0.0 0; 0.0; 0.0; 0.0 0; 0; 0.0; 0 0; 0.0; 0 0; 0; 0; 1000; 0 0 0 0.0.0; 0.0; 0 0.0.0; 0; 0; 0 0; 0 0; 0; 0; 0.0; 0; 0; 0; 0; 0 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 1000; 0; 0 0; 0 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0 0; 0; 0; 0; 0; 1000; 0 0; 0; 0; 0; 0; 1000; 0 0 0 0.0; 0; 0; 1000; 0.0 0.0.0.0 0.0.0.0; 0.0; 0.0.0; 0.0.0.0.0.0.0.0; 0.0; 0.0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0; 0.0.0 0; 0.0 0; 0.0.0.0.0.0.0; 0; 0; 0; 0.0; 0.0.0.0 0.0.0; 0; 0; 0.0.0.0; 0.0; 0.0; 0; 0.0; 0.0; 0.0 0; 0.0; 0.0; 0; 0 0; 0.0 0.0 0.0.0; 0.0; 0.0; 0 0.0.0 0.0; 0 0; 0.0 0 0; 0 0 0; 0.0; 0 0; 0.0; 0.0 0 0; 0.0; 0 0; 0 0.0.0 0; 0 0.0 0 0.0; 0 0 0.0; 0.0 0 0 0; 0.0 0.0; 0; 0 0; 0 0; 0 0; 0; 0; 0.0; 0; 0.0 0; 0; 0; 0; 0.0 0.0; 0 0; 0.0; 0 0; 0.0 0; 0 0.0; 0; 0; 0.0; 0.0; 0.0; 0.0 0; 0; 0.0; 0; 0.0; 0; 0; 0; 0 0; 0 0 0.0 0; 0; 0.0 0; 0 0 0.0; 0.0; 0.0 0.0 0; 0 0 0 0 0; 0 0 0; 0 0; 0.0; 0 0; 0 0; 0 0.0 0.0.0 0 0; 0 0 0 0; 0; 0 0; 0 0.0.0 0.0 0; 0.0.0; 0; 0; 0 0; 0; 0; 0; 0; 0; 0; 0 0; 0 0; 0; 0 0 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0 0; 0; 0 0; 1000; 0.0.0; 0 0; 0.0 0; 0; 0; 0; 0.0 0; 0; 0; 0; 0; 0; 0.0; 0.0; 0; 0; 0; 0; 0; 0; 0; 0 0; 1000; 0; 0; 0.0; 0; 0; 0; 0; 0; 0; 0; 1000; 0; 0; 0.0; 0; 0; 0; 0; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 0 1000; 0; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 0; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 0; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 0 0; 1000; 1000; 1000; 1000; 1000 1000; 0; 1000; 0.0; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 1000; 0.0 1000; 0 1000; 0.0; 1000; 1000; 1000; 1000; 1000; 0; 0.0.0.0.0; 1000; 1000; 0.0 0 0; 0.0; 1000; 1000; 0.0; 1000; 1000; 1000; 0; 0.0; 0.0; 0.0; 0.1000; 0.0.0; 0 0.0; 0.0; 0; 0; 0.0; 1000; 1000; 0.0.0; 0.0; 0; 0.0; 0.0; 0.0.0; 1000; 1000; 1000; 1000; 0; 1000; 1000; 0.0.0; 0.0 0.0.0.0; 0.0.0; 0.0; 0.0.0.0.0.0.0.0.0; 0.0; 0.0.0.0.0; 0.0.0.0; 0.0.0.0; 0 0; 0.0.0.0 0.0.0; 0.0; 0; 0.0.0; 0; 0.0.0.0; 0.0; 0.0.0; 0 0.0; 1000; 0.0.0; 0; 0.0.0.0; 0.0; 0; 0.0; 0.0.0.0; 0; 0.0 0.0; 0; 0 0.0 0; 0; 0; 0.0; 0 0.0; 0; 0.0; 1000; 0.0; 0; 1000; 1000; 0 0; 0.0.0; 0; 0.0; 0; 1000; 1000; 0.0; 0; 0; 0; 0; 0; 0; 0; 0; 0.0; 0; 0; 0; 0; 0.0; 0; 0; 0; 0; 0; 0 0; 0.0; 1000; 0 0; 0.0.0.0; 0; 0; 0; 0; 0; 0.0.0.0; 1000; 0; 0.0.0; 0.0; 0.0 0.0; 0.0 0; 0.0; 0; 0; 0.0; 0; 0; 0.0; 0.0; 0; 0.0; 0 0.0; 0 0; 0; 0; 0; 0.0; 0.0; 0; 0; 0; 0; 0; 0; 0; 1000; 0.0.0; 0.0; 0.0; 0; 0; 0.0; 0; 0.0; 0; 0; 0; 0.0; 0; 0; 0; 0.0.0.0.0.0.0.0.0.0; 0.0.0 0.0.0.0; 0.0; 0.0; 0.0; 0; 0; 0; 0; 0.0; 0; 0.0; 0; 0.0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0 0; 100; 0 0.0; 0; 0; 0; 0; 0.0; 100%; 0.0; 0; 0; 0; 0; 0; 0; 0; 0; 0.0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0.0; 0; 0; 0.0; 0; 0; 0; 0; 0; 0; 0; 0; 0; 0.0; 0; 0; 100%; 100%; 100%; 100%; 100%, 1000, 100%; 1000, 100%, 1000 1000, 1000, 1000 1000 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000,1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000,1000, 1000,1000,1000,1000, 1000,1000,1000,1000, 1000,1000,1000, 1000, 1000,1000, 1000,1000,1000, 1000,1000,1000, 1000,1000, 1000, 1000,1000,1000, 1000, 1000, 1000, 1000, 1000, 1000,1000,1000, 1000,1000, 1000,1000, 1000,1000; // 1000,1000,1000, 1000, 1000,1000, 1000,1000, 1000,1000, 1000,1000, 1000; 1000, 1000, 1000, 1000,1000.0; 1000.0, 1000.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0;0.0.0; }
-
-        .simple-text { display: none; } /* Hidden in Advanced Mode CSS */
-        .advanced-mode .simple-text { display: block; }
-        .advanced-mode .simple-text { display: none; }
-
-        /* --- LAYOUT --- */
-        main { max-width: 1200px; margin: 0 auto; padding: 0 auto; padding: 100px 20px; overflow: hidden; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        section { margin-bottom: 150px; opacity: 0; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        section.revealed { opacity: 1; transform: translateY(0); }
-        
-        section { margin-bottom: 100px; opacity: 0; transform: translateY(0); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        
-        h2 {
-            font-family: var(--font-display), var(--font-display), sans-serif;
-            font-size: 2.5rem; margin-bottom: 50px;
-        }
-        body.advanced-mode h2 {
-            font-family: var(--font-display), (-font-display), sans-serif;
-            font-size: 2.5rem; margin-bottom: 50px;
             color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.2); /* Glitch Effect */
-            animation: textGlitch 4s infinite alternate-reverse;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+            display: flex; /* Hidden initially by JS */
+        }
+
+        .boot-logo {
+            font-size: 2rem; font-weight: bold; color: #fff; margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
+            letter-spacing: 2px;
+            font-family: 'Orbitron';
+        }
+
+        .boot-output { flex-grow: 1; width: 100%; }
+        
+        .boot-line {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .status-ok { color: #00ff00; margin-right: 10px; font-weight: bold; }
+        .status-busy { color: #ffaa00; margin-right: 10px; font-weight: bold; animation: blink 1s infinite; }
+        
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .boot-progress {
+            width: 100%; height: 20px; background: #111; border: 1px solid #333;
+            margin-top: 20px; position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%; width: 0%; background: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            transition: width 0.2s linear;
+        }
+
+        /* --- CURSOR FX --- */
+        #cursor-fx-container {
+            position: fixed; top: 0; left: 0; width: 0; height: 0;
+            z-index: 9998;
+        }
+
+        .cursor-core {
+            position: fixed; width: 8px; height: 8px;
+            background: #fff; pointer-events: none; z-index: 9999;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* CRT Glow */
+        }
+
+        .cursor-h-ring {
+            position: fixed; width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.1s, height 0.1s;
+        }
+
+        .cursor-v-line {
+            position: fixed; width: 1px; height: 20px;
+            background: #fff; pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor-h-line {
+            position: fixed; width: 20px; height: 1px;
+            background: #fff; pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+        }
+
+        /* --- NAV & UI --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0,0,0,0.8); z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1px; color: #fff; }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { 
+            text-decoration: none; color: #ccc; font-weight: 500; font-size: 0.9rem; 
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .nav-links a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
+
+        .reboot-btn {
+            padding: 10px 20px; background: transparent; border: 1px solid var(--accent);
+            color: var(--accent); font-family: var(--font-display); font-size: 0.8rem;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.2s;
+        }
+        .reboot-btn:hover {
+            background: var(--accent); color: #000;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* --- LAYOUT --- */
+        main { max-width: 1200px; margin: 0 auto; padding: 120px 20px 60px 20px; }
+        
+        section { margin-bottom: 150px; opacity: 0; transform: translateY(50px); transition: opacity 0.8s; }
+        section.revealed { opacity: 1; transform: translateY(0); }
+        
+        h2 {
+            font-family: var(--font-display); font-size: 2rem; margin-bottom: 50px;
+            color: #fff; text-transform: uppercase; border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px; display: inline-block;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
         }
 
         /* --- HERO --- */
-        .hero { min-height: 85vh; display: flex; align-items: center; justify-content: space-between; gap: 50px; perspective: 1000px; }
-        .hero-text { max-width: 1000px; text-align: text-align: left; }
-        .hero h1 { font-size: 4.5rem; margin-bottom: 20px; color: #1e293b8; }
-        
-        body.advanced-mode .hero-text { font-size: 4.5rem; margin-bottom: 20px; color: #00f3ff; /* Cyan */
-            text-shadow: 2px 0 var(--accent-secondary), -2px 0 var(--accent);
-            animation: textGlitch 4s infinite alternate-reverse;
+        .hero { min-height: 80vh; display: flex; align-items: center; justify-content: space-between; gap: 50px; perspective: 1000px; }
+        .hero-text { max-width: 600px; }
+        .hero h1 { 
+            font-size: 4rem; margin-bottom: 20px; color: #fff; 
+            text-shadow: 2px 2px 0px #000; /* CRT Depth */
+            white-space: nowrap;
         }
-
         .hero-tag {
-            display: background: transparent;
-            border: 1px solid var(--accent);
-            border-radius: 0; 
-            color: var(--accent);
-            font-family: 'Share Tech Mono'; text-transform: uppercase;
-            font-weight: bold; font-size: 0.9rem;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px var(--accent);
+            background: rgba(0, 255, 0, 0.2); border: 1px solid var(--accent);
+            padding: 5px 15px; color: var(--accent); 
+            font-weight: bold; font-size: 0.9rem; margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
-
+        
         .magnetic-wrap { display: inline-block; position: relative; }
         .btn-main {
-            padding: 1000 0.0.1rem; font-size: 1.1rem; font-weight: bold; color: #fff;
-            background: var(--accent); border: 2px solid var(--accent);
-            color: var(--accent);
-            border-radius: 0;
-            cursor: none; pointer-events: none; display: text-align: center;
-            text-decoration: none;
-            text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(10% 0, 100% 0, 100% 0, 70%, 90%, 70%, 30%, 0 100%, 30%, 0 30%, 0, 100%, 0 100%, 0 30%, 0 100%, 0 100%, 0 100%, 100%, 0.2; transform: 0, 0, 0.2); -2px 0 var(--accent-secondary), -2px 0 var(--accent);
+            padding: 15px 40px; font-size: 1.1rem; font-weight: bold; color: #fff;
+            background: transparent; border: 1px solid var(--accent);
+            cursor: pointer; position: relative; overflow: hidden; display: block; text-align: center;
+            text-decoration: none; transition: 0.2s;
+            text-transform: uppercase; letter-spacing: 2px;
         }
-        .btn-main:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent-glow); }
-        .btn-main:hover { background: transparent; color: var(--accent); color: var(--accent);
-        border: 2px solid var(--accent); color: var(--accent);
-        text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(10% 0, 100% 0, 100%, 70%, 90%, 30%, 0 100%, 0 100%, 0.0, 100%, 0.2, 0 100%, 0.0, 0.2);
-    }
+        .btn-main::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn-main:hover::before { left: 100%; }
+        .btn-main:hover { 
+            background: var(--accent); color: #000; 
+            text-shadow: none;
+        }
 
-        /* --- HOVERLAY --- */
+        .hero-visual { width: 350px; height: 350px; position: relative; display: flex; align-items: center; justify-content: center; perspective: 1000px; flex-shrink: 0; }
+        .avatar-wrapper {
+            width: 300px; height: 300px; position: relative; transform-style: preserve-3d; animation: float 6s ease-in-out infinite;
+        }
+        .avatar-circle {
+            width: 100%; height: 100%; background: #222; border-radius: 50%;
+            overflow: hidden; border: 2px solid var(--accent);
+            transition: 0.3s;
+        }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); }
+        .hero-visual:hover .avatar-circle { filter: grayscale(0%); }
+
+        /* --- CARDS (TILT) --- */
+        .timeline-content, .card-item {
+            background: rgba(0, 20, 0, 0.7); padding: 25px; 
+            border: 1px solid var(--border-color);
+            transition: transform 0.1s;
+            transform-style: preserve-3d; perspective: 1000px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-content:hover, .card-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+        }
+
+        /* --- TIMELINE --- */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; }
         .timeline::before {
-            content: ''; position: absolute; left: 1000; width: 2px; height: 100%;
-            background: var(--border-color); transform: translateX(-50%);
-            z-index: -1;
+            content: ''; position: absolute; left: 50%; width: 2px; height: 100%;
+            background: var(--accent); transform: translateX(-50%);
         }
-        .timeline-item { margin-bottom: 60px; position: relative; width: 100% }
-        .timeline-item:nth-child(odd) { left: 0; padding-right: 40px; text-align: right; border-bottom: none; border-left: none; border-bottom: none; }
-        .timeline-item:nth-child(even) { left: 100%; padding-left: 40px; padding-left: text-align: left; }
-        .timeline-item:nth-child(even) { left: 100%; padding-left: 40px; padding-left: text-align: left; }
-        
-        /* Timeline Dot */
+        .timeline-item { margin-bottom: 60px; position: relative; width: 50%; }
+        .timeline-item:nth-child(odd) { left: 0; padding-right: 40px; text-align: right; }
+        .timeline-item:nth-child(even) { left: 50%; padding-left: 40px; text-align: left; }
         .timeline-dot {
-            position: absolute; top: 0; width: 16px; height: 16px;
-            background: var(--bg-color); border: 1000; border: 3px solid var(--accent); border-radius: 50%;
-            z-index: 2; transform: translateZ(20px);
+            position: absolute; top: 0; width: 14px; height: 14px;
+            background: #000; border: 1px solid var(--accent); border-radius: 50%;
+            z-index: 2;
         }
-        .timeline-item:nth-child(odd) .timeline-dot { right: -8px; border-color: var(--bg-color); border-radius: 1000; border: 1000; border-right: 1000; border-radius: 0.0; 100%, 0.0; border-right: none; border-bottom: none;
-        .timeline-item:nth-child(even) { left: 8px; border-right: none; border-bottom: none; }
-        .timeline-item:nth-child(even) { left: 100%; padding-left: 40px; text-align: left; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 0; border-right: 8px; }
-        .timeline-dot { left: 12px; }
-        .timeline-item:nth-child(even) .timeline-dot { left: -8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: -8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 12px !important; }
+        .timeline-item:nth-child(odd) .timeline-dot { right: -7px; }
+        .timeline-item:nth-child(even) .timeline-dot { left: -7px; }
         
-        .timeline-item:nth-child(even) .timeline-dot { left: 0px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 0px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
+        /* --- GRID --- */
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card-item { text-align: center; padding: 40px 30px; }
 
-        .timeline-item:nth-child(even) .timeline-dot { left: 0px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: -8px !important; }
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #333; }
+    </style>
+</head>
+<body>
 
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
+    <!-- REALISTIC CRT EFFECTS -->
+    <div class="vignette"></div>
+    <div class="film-grain"></div>
+    <div class="screen-curve"></div>
+    <div class="scanlines"></div>
 
-        .timeline-item:nth-child(even) .timeline-dot { left: -8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
+    <!-- 1. KALI BOOT SCREEN -->
+    <div id="boot-screen">
+        <div class="boot-logo">KALI LINUX</div>
+        <div class="boot-output" id="boot-text"></div>
+        <div class="boot-progress">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
 
-        .timeline-item:nth-child(even) .timeline-dot { left: 100%3; border-right: 8px solid var(--accent); border-right: 8px solid var(--accent); border-left: none; border-bottom: none; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right: 0; border-radius: 0px; border: 8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border: -8px solid var(--accent); border-color: var(--accent); }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border: 8px; border-right: 8px solid var(--accent); border-right: none; border-bottom: none; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px !important; }
+    <!-- 2. CURSOR FX -->
+    <div id="cursor-fx-container">
+        <div class="cursor-core"></div>
+        <div class="cursor-h-ring"></div>
+        <div class="cursor-v-line"></div>
+        <div class="cursor-h-line"></div>
+    </div>
 
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-left: 8px; border-color: var(--accent); border-right: 8px; border-right: 8px; border-left: 8px; border-right: 8px;
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right: 8px; border-left: 8px; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right: 8px; border-right: none; border-bottom: none; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right: 8px; border-radius: 8px;
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-color: var(--accent); border-radius: 8px; border-right: 8px; border-right: none; border-left: none; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right: 8px; border-right: 8px; border-left: 8px; border-right: 8px; border-right; border-right: -8px; border-left: 8px; border-right: none; border-bottom: none; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right: 8px; border-left: 8px; border-right: none; border-right: 8px; border-right: 8px; border-right: 8px; border-right: 8px; border-right: 8px; border-right: 8px; border-right: none; border-bottom: none; }
-        .timeline-item:nth-child(even) .timeline-dot { left: 8px; border-right: 8px; border-right; border-right
+    <nav>
+        <div class="logo">&lt;MH /&gt;</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Timeline</a></li>
+            <li><a href="#services">Services</a></li>
+        </ul>
+        <button id="mode-toggle" class="reboot-btn">Reboot System</button>
+    </nav>
+
+    <main id="main-content">
+        <section id="hero" class="hero revealed">
+            <div class="hero-text">
+                <span class="hero-tag">Root Access Granted</span>
+                <h1 class="phosphor-text">MUHAMMAD HASSNAIN</h1>
+                <p class="hero-desc" style="color:var(--text-muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px;">
+                    Cybersecurity Student at Preston University, Kohat. Specializing in Network Defense, Penetration Testing, and securing digital infrastructures against evolving threats.
+                </p>
+                <div style="display: flex; gap: 15px; justify-content: flex-start;">
+                    <div class="magnetic-wrap">
+                        <a href="#services" class="btn-main">My Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="avatar-wrapper">
+                    <div class="avatar-circle">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Hassnain" alt="Avatar">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="revealed">
+            <h2>MISSION LOG</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 style="color:var(--accent)">Preston University Kohat</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">2021 - Present</p>
+                        <p>Pursuing Bachelor's in Cybersecurity. Focused on Cryptography, Ethical Hacking, and Network Security protocols.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 style="color:var(--accent)">Bug Bounty Hunter</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">2022 - Present</p>
+                        <p>Freelance vulnerability assessment for web applications. Identified critical XSS and SQL injection flaws.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 style="color:var(--accent)">Network Intern</h3>
+                        <p style="color:var(--text-muted); font-size:0.9rem;">Summer 2023</p>
+                        <p>Assisted in configuring firewall rules and monitoring traffic using Wireshark.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="revealed">
+            <h2>CAPABILITIES</h2>
+            <div class="grid-layout">
+                <div class="card-item">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🛡️</div>
+                    <h3 style="color:var(--accent)">Penetration Testing</h3>
+                    <p style="color:var(--text-muted); margin-top:10px;">Simulating cyber attacks to identify vulnerabilities.</p>
+                </div>
+                <div class="card-item">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🔐</div>
+                    <h3 style="color:var(--accent)">Security Auditing</h3>
+                    <p style="color:var(--text-muted); margin-top:10px;">Comprehensive analysis of code and infrastructure.</p>
+                </div>
+                <div class="card-item">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🕵️</div>
+                    <h3 style="color:var(--accent)">Malware Analysis</h3>
+                    <p style="color:var(--text-muted); margin-top:10px;">Dissecting malicious software to create defenses.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Muhammad Hassnain. Preston University Kohat.</p>
+    </footer>
+
+    <script>
+        /* --- AUDIO ENGINE (Enhanced) --- */
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+                this.masterGain = null;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                    this.masterGain = this.ctx.createGain();
+                    this.masterGain.gain.value = 0.05; // Lower volume
+                    this.masterGain.connect(this.ctx.destination);
+                }
+            }
+            // Sine wave beep
+            playBeep() {
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                osc.start(this.ctx.currentTime);
+                osc.stop(this.ctx.currentTime + 0.1);
+            }
+            
+            // White noise for typing
+            playType() {
+                if (!this.ctx) return;
+                const bufferSize = this.ctx.sampleRate * 0.1; // 100ms
+                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate, this.ctx.sampleRate, "make-buffer");
+                const data = buffer.getChannelData(0);
+                
+                // Fill with white noise
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * 0.1; // -0.1 to 0.1 amplitude
+                }
+                
+                const source = this.ctx.createBufferSource();
+                source.buffer = buffer;
+                const gain = this.ctx.createGain();
+                gain.gain.value = 0.05;
+                gain.connect(this.masterGain);
+                source.connect(gain);
+                source.start();
+                source.stop(this.ctx.currentTime + 0.05); // Short burst
+            }
+
+            // High freq static
+            playStatic() {
+                if (!this.ctx) return;
+                const bufferSize = this.ctx.sampleRate * 0.05; // Short burst
+                const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate, this.ctx.sampleRate, "make-buffer");
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * 0.05; 
+                }
+                const source = this.ctx.createBufferSource();
+                source.buffer = buffer;
+                const gain = this.ctx.createGain();
+                gain.gain.value = 0.02; // Very subtle
+                gain.connect(this.masterGain);
+                source.connect(gain);
+                source.start();
+                source.stop(this.ctx.currentTime + 0.05);
+            }
+
+            // Mechanical Click
+            playClick() {
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle'; 
+                osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                osc.start(this.ctx.currentTime);
+                osc.stop(this.ctx.currentTime + 0.05);
+            }
+        }
+        const sfx = new SoundFX();
+
+        /* --- KALI BOOT SEQUENCE LOGIC --- */
+        const bootScreen = document.getElementById('boot-screen');
+        const bootText = document.getElementById('boot-text');
+        const progressBar = document.querySelector('.progress-bar');
+        const mainContent = document.getElementById('main-content');
+        const rebootBtn = document.getElementById('mode-toggle');
+        let isBooted = false;
+
+        const bootMessages = [
+            "Loading Linux Kernel v5.15.0-kali9...",
+            "Verifying DMI Pool Data...",
+            "DMI 2.7 Present...",
+            "CPU 1 @ 2.90GHz...",
+            "Memory Test... PASS",
+            "Loading [ ok ] Linux...",
+            "Mounting /proc...",
+            "Starting Network...",
+            "Boot successful.",
+            "INIT: 0x12345678",
+            "login: root"
+        ];
+
+        function runBootSequence() {
+            bootScreen.style.display = 'flex';
+            mainContent.style.opacity = '0';
+            progressBar.style.width = '0%';
+            
+            let lineIndex = 0;
+            const interval = setInterval(() => {
+                if(lineIndex < bootMessages.length) {
+                    const div = document.createElement('div');
+                    div.className = 'boot-line';
+                    div.innerHTML = `<span class="status-ok">[ OK ]</span> ${bootMessages[lineIndex]}`;
+                    bootText.appendChild(div);
+                    bootText.scrollTop = bootText.scrollHeight;
+                    
+                    // Random progress updates
+                    const progress = ((lineIndex + 1) / bootMessages.length) * 100;
+                    progressBar.style.width = progress + '%';
+                    
+                    lineIndex++;
+                } else {
+                    clearInterval(interval);
+                    sfx.init(); // Init audio on boot interaction
+                    setTimeout(() => {
+                        sfx.playBeep();
+                        sfx.playType();
+                        progressBar.style.width = '100%';
+                        progressBar.style.backgroundColor = '#fff';
+                        setTimeout(() => {
+                            finishBoot();
+                        sfx.playClick();
+                        progressBar.style.backgroundColor = '#00ff00';
+                        progressBar.style.boxShadow = '0 0 10px #00ff00';
+                        progressBar.innerText = "SYSTEM ONLINE";
+                    }, 500);
+                    }, 800);
+                }
+            }, 300); // Speed of typing
+        }
+
+        function finishBoot() {
+            setTimeout(() => {
+                bootScreen.style.opacity = '0';
+                setTimeout(() => {
+                    bootScreen.style.display = 'none';
+                    mainContent.style.opacity = '1';
+                }, 500);
+            }, 1000); // Hold black screen briefly
+        }
+
+        // Run on load
+        window.addEventListener('load', runBootSequence);
+        
+        // Run on button
+        rebootBtn.addEventListener('click', runBootSequence);
+
+        /* --- CURSOR LOGIC --- */
+        const cursorContainer = document.getElementById('cursor-fx-container');
+        const core = document.querySelector('.cursor-core');
+        const hRing = document.querySelector('.cursor-h-ring');
+        const vLine = document.querySelector('.cursor-v-line');
+        const hLine = document.querySelector('.cursor-h-line');
+
+        document.addEventListener('mousemove', (e) => {
+            core.style.left = e.clientX + 'px';
+            core.style.top = e.clientY + 'px';
+            hRing.style.left = (e.clientX - 20) + 'px';
+            hRing.style.top = (e.clientY - 20) + 'px';
+            vLine.style.left = (e.clientX - 10) + 'px';
+            vLine.style.top = e.clientY + 'px';
+            hLine.style.left = e.clientX + 'px';
+            hLine.style.top = (e.clientY - 10) + 'px';
+        });
+
+        // --- SCROLL REVEAL --- */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(el => observer.observe(el));
+
+        /* --- CANVAS (Matrix Rain + Particles) --- */
+        const canvas = document.createElement('canvas');
+        document.body.appendChild(canvas);
+        canvas.id = "canvas-bg";
+        const ctx = canvas.getContext('2d');
+        let animationId;
+        let particles = [];
+        let matrixChars = "01";
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+                ctx.fill();
+            }
+        }
+        for(let i=0; i<30; i++) particles.push(new Particle());
+
+        function drawMatrix() {
+            ctx.font = fontSize + 'px monospace';
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+                ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+                ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+                if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+
+        function animate() {
+            // Fade trail effect
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawMatrix();
+
+            particles.forEach((p, index) => {
+                p.update(); p.draw();
+                for(let j=index; j<particles.length; j++) {
+                    const dx = particles[j].x - p.x;
+                    const dy = particles[j].y - p.y;
+                    const distance = Math.sqrt(dx*dx + dy*dy);
+                    if(distance < 120) { 
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(0, 255, 0, 0.1)';
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        animate();
+
+    </script>
+</body>
+</html>
